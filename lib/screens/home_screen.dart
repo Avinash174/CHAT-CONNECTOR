@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remixicon/remixicon.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,9 +13,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
-        centerTitle: true,
-        title: const Text('CONNECTOR'),
+        title: const Text('Chat Connector'),
+        leading: const Icon(Remix.home_8_line),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Remix.search_line,
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(
+              Remix.more_2_fill,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 15,
+        ),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(
+            Remix.chat_4_line,
+          ),
+        ),
       ),
     );
   }

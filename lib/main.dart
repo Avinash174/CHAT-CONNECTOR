@@ -1,7 +1,13 @@
-import 'package:connector/screens/home_screen.dart';
+import 'package:connector/screens/splash_sxreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'firebase_options.dart';
+
+late Size mq;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  _initializeFirebase();
   runApp(const MyApp());
 }
 
@@ -15,9 +21,28 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        appBarTheme: const AppBarTheme(
+          elevation: 1,
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+            fontSize: 18,
+          ),
+          backgroundColor: Colors.white,
+        ),
+        primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
+}
+
+_initializeFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
