@@ -1,4 +1,4 @@
-# connector
+# Chat Connector 💬
 
 A new Flutter project.
 
