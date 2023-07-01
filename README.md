@@ -1,6 +1,6 @@
 # Chat Connector 💬
 
-A new Flutter project.
+A New Chat App In Flutter.
 
 ## Getting Started
 
