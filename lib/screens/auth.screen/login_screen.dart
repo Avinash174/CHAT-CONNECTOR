@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:connector/apis/apis.dart';
 import 'package:connector/helper/dialog.dart';
 import 'package:connector/main.dart';
 import 'package:connector/screens/home_screen.dart';
@@ -27,7 +28,9 @@ class _LoginSCreenState extends State<LoginSCreen> {
   }
 
   _handleGoogleClick() {
+    Dialogs.showProgressBar(context);
     _signInWithGoogle().then((user) {
+      Navigator.pop(context);
       if (user != null) {
         log('\nUser:${user.user}');
         log('\nUserAdditionalnfo:${user.additionalUserInfo}');
@@ -38,7 +41,7 @@ class _LoginSCreenState extends State<LoginSCreen> {
   }
 
   _signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await APIs.auth.signOut();
     await GoogleSignIn().signOut();
   }
 
@@ -58,7 +61,7 @@ class _LoginSCreenState extends State<LoginSCreen> {
       );
 
       // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      return await APIs.auth.signInWithCredential(credential);
     } catch (e) {
       log('\n_signInWithGoogle:$e');
       Dialogs.showSnackBar(
