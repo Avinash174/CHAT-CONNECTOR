@@ -1,5 +1,11 @@
+import 'dart:developer';
+
+import 'package:connector/helper/dialog.dart';
 import 'package:connector/main.dart';
+import 'package:connector/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginSCreen extends StatefulWidget {
   const LoginSCreen({super.key});
@@ -18,6 +24,47 @@ class _LoginSCreenState extends State<LoginSCreen> {
         _isAnimate = true;
       });
     });
+  }
+
+  _handleGoogleClick() {
+    _signInWithGoogle().then((user) {
+      if (user != null) {
+        log('\nUser:${user.user}');
+        log('\nUserAdditionalnfo:${user.additionalUserInfo}');
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      }
+    });
+  }
+
+  _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+  }
+
+  Future<UserCredential?> _signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      log('\n_signInWithGoogle:$e');
+      Dialogs.showSnackBar(
+          context, 'Something Went Wrong(Please,Check Internet Connection!)');
+      return null;
+    }
   }
 
   @override
@@ -45,7 +92,9 @@ class _LoginSCreenState extends State<LoginSCreen> {
             width: mq.width * .9,
             height: mq.height * .06,
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                _handleGoogleClick();
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 223, 255, 187),
                   shape: const StadiumBorder()),
