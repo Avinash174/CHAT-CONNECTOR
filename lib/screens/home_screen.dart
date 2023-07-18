@@ -1,6 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
-import 'package:connector/models/chat_user.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:remixicon/remixicon.dart';
@@ -13,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<chatUser> list = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,27 +53,26 @@ class _HomeScreenState extends State<HomeScreen> {
       body: StreamBuilder(
         stream: APIs.firebaseFirestore.collection('users').snapshots(),
         builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-            case ConnectionState.done:
-              return const Center(child: CircularProgressIndicator());
-
-            case ConnectionState.waiting:
-            case ConnectionState.done:
-              final data = snapshot.data?.docs;
-              list =
-                  data?.map((e) => chatUser.fromJson(e.data())).toList() ?? [];
-              return ListView.builder(
-                padding: EdgeInsets.only(
-                  top: mq.height * 0.01,
-                ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  return Text('name:${list[index]}');
-                },
-              );
+          final list = [];
+          if (snapshot.hasData) {
+            final data = snapshot.data?.docs;
+            for (var i in data!) {
+              log('Data:${jsonEncode(
+                i.data(),
+              )}');
+              list.add(i.data()['name']);
+            }
           }
+          return ListView.builder(
+            padding: EdgeInsets.only(
+              top: mq.height * 0.01,
+            ),
+            physics: const BouncingScrollPhysics(),
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Text('name:${list[index]}');
+            },
+          );
         },
       ),
     );
