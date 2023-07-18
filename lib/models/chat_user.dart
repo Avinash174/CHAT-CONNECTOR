@@ -23,7 +23,7 @@ class chatUser {
   chatUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
     name = json['name'] ?? '';
-    about = json['json'] ?? '';
+    about = json['about'] ?? '';
     createdAt = json['createdAt'] ?? '';
     id = json['id'] ?? '';
     lastActive = json['lastActive'] ?? '';
@@ -32,17 +32,17 @@ class chatUser {
     pushToken = json['pushToken'] ?? '';
   }
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['image'] = image;
-    _data['name'] = name;
-    _data['id'] = id;
-    _data['about'] = about;
-    _data['lastActive'] = lastActive;
-    _data['isOnline'] = isOnline;
-    _data['createdAt'] = createdAt;
-    _data['email'] = email;
-    _data['pushToken'] = pushToken;
+    final data = <String, dynamic>{};
+    data['image'] = image;
+    data['name'] = name;
+    data['id'] = id;
+    data['about'] = about;
+    data['lastActive'] = lastActive;
+    data['isOnline'] = isOnline;
+    data['createdAt'] = createdAt;
+    data['email'] = email;
+    data['pushToken'] = pushToken;
 
-    return _data;
+    return data;
   }
 }
