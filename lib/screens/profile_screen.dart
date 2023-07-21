@@ -53,6 +53,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontSize: 20.0,
                 color: Colors.black54,
               ),
+            ),
+            SizedBox(
+              height: mq.height * 0.04,
+            ),
+            TextFormField(
+              initialValue: widget.user.name,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                prefixIcon: const Icon(
+                  Remix.user_line,
+                ),
+                hintText: 'e.g Jony',
+                labelText: 'Name',
+              ),
+            ),
+            SizedBox(
+              height: mq.height * 0.03,
+            ),
+            TextFormField(
+              initialValue: widget.user.about,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                prefixIcon: const Icon(
+                  Remix.information_line,
+                ),
+                hintText: 'e.g Happy',
+                labelText: 'About',
+              ),
+            ),
+            SizedBox(
+              height: mq.height * 0.05,
+            ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(),
+                minimumSize: Size(
+                  mq.width * .5,
+                  mq.height * 0.06,
+                ),
+              ),
+              onPressed: () {},
+              icon: const Icon(
+                Remix.edit_line,
+                size: 28,
+              ),
+              label: const Text(
+                'Update',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
             )
           ],
         ),
@@ -61,13 +116,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.symmetric(
           vertical: 15,
         ),
-        child: FloatingActionButton(
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.redAccent,
           onPressed: () async {
             await APIs.auth.signOut();
             await GoogleSignIn().signOut();
           },
-          child: const Icon(
-            Remix.chat_4_line,
+          label: const Text('Logout'),
+          icon: const Icon(
+            Remix.logout_box_r_fill,
           ),
         ),
       ),
