@@ -25,91 +25,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: EdgeInsets.symmetric(
           horizontal: mq.width * 0.05,
         ),
-        child: Column(
-          children: [
-            SizedBox(
-              width: mq.width,
-              height: mq.height * .03,
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(
-                mq.height * .1,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                width: mq.width,
+                height: mq.height * .03,
               ),
-              child: CachedNetworkImage(
-                width: mq.height * .2,
-                height: mq.height * .2,
-                fit: BoxFit.fill,
-                imageUrl: widget.user.image.toString(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
-            SizedBox(
-              // width: mq.width,
-              height: mq.height * .03,
-            ),
-            Text(
-              widget.user.email,
-              style: const TextStyle(
-                fontSize: 20.0,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(
-              height: mq.height * 0.04,
-            ),
-            TextFormField(
-              initialValue: widget.user.name,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  mq.height * .1,
                 ),
-                prefixIcon: const Icon(
-                  Remix.user_line,
-                ),
-                hintText: 'e.g Jony',
-                labelText: 'Name',
-              ),
-            ),
-            SizedBox(
-              height: mq.height * 0.03,
-            ),
-            TextFormField(
-              initialValue: widget.user.about,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                prefixIcon: const Icon(
-                  Remix.information_line,
-                ),
-                hintText: 'e.g Happy',
-                labelText: 'About',
-              ),
-            ),
-            SizedBox(
-              height: mq.height * 0.05,
-            ),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(),
-                minimumSize: Size(
-                  mq.width * .5,
-                  mq.height * 0.06,
+                child: CachedNetworkImage(
+                  width: mq.height * .2,
+                  height: mq.height * .2,
+                  fit: BoxFit.fill,
+                  imageUrl: widget.user.image.toString(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              onPressed: () {},
-              icon: const Icon(
-                Remix.edit_line,
-                size: 28,
+              SizedBox(
+                // width: mq.width,
+                height: mq.height * .03,
               ),
-              label: const Text(
-                'Update',
-                style: TextStyle(
-                  fontSize: 18,
+              Text(
+                widget.user.email,
+                style: const TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black54,
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: mq.height * 0.04,
+              ),
+              TextFormField(
+                initialValue: widget.user.name,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  prefixIcon: const Icon(
+                    Remix.user_line,
+                  ),
+                  hintText: 'e.g Jony',
+                  labelText: 'Name',
+                ),
+              ),
+              SizedBox(
+                height: mq.height * 0.03,
+              ),
+              TextFormField(
+                initialValue: widget.user.about,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  prefixIcon: const Icon(
+                    Remix.information_line,
+                  ),
+                  hintText: 'e.g Happy',
+                  labelText: 'About',
+                ),
+              ),
+              SizedBox(
+                height: mq.height * 0.05,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  minimumSize: Size(
+                    mq.width * .5,
+                    mq.height * 0.06,
+                  ),
+                ),
+                onPressed: () {},
+                icon: const Icon(
+                  Remix.edit_line,
+                  size: 28,
+                ),
+                label: const Text(
+                  'Update',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: Padding(
