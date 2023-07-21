@@ -1,6 +1,7 @@
 import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
 import 'package:connector/models/chat_user.dart';
+import 'package:connector/screens/profile_screen.dart';
 import 'package:connector/widgets/chat_user.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -32,7 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(
               Remix.more_2_fill,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ProfileScreen(
+                    user: list[0],
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
