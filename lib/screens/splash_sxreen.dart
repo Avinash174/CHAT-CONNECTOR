@@ -1,5 +1,6 @@
 import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
+import 'package:connector/screens/auth.screen/login_screen.dart';
 import 'package:connector/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => const HomeScreen(),
+            builder: (_) => const LoginSCreen(),
           ),
         );
       }
