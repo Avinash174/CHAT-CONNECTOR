@@ -5,7 +5,6 @@ import 'package:connector/screens/profile_screen.dart';
 import 'package:connector/widgets/chat_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:remixicon/remixicon.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -106,10 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               vertical: 15,
             ),
             child: FloatingActionButton(
-              onPressed: () async {
-                await APIs.auth.signOut();
-                await GoogleSignIn().signOut();
-              },
+              onPressed: () {},
               child: const Icon(
                 Remix.chat_4_line,
               ),

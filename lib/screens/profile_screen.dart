@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connector/apis/apis.dart';
 import 'package:connector/helper/dialog.dart';
@@ -6,6 +8,7 @@ import 'package:connector/models/chat_user.dart';
 import 'package:connector/screens/auth.screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:remixicon/remixicon.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? _image;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -41,25 +45,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          mq.height * .1,
-                        ),
-                        child: CachedNetworkImage(
-                          width: mq.height * .2,
-                          height: mq.height * .2,
-                          fit: BoxFit.fill,
-                          imageUrl: widget.user.image.toString(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ),
+                      _image != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                mq.height * .1,
+                              ),
+                              child: Image.file(
+                                File(
+                                  _image!,
+                                ),
+                                width: mq.height * .2,
+                                height: mq.height * .2,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                mq.height * .1,
+                              ),
+                              child: CachedNetworkImage(
+                                width: mq.height * .2,
+                                height: mq.height * .2,
+                                fit: BoxFit.fill,
+                                imageUrl: widget.user.image.toString(),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
                       Positioned(
                         bottom: 0,
                         right: 0,
                         child: MaterialButton(
                           elevation: 1,
-                          onPressed: () {},
+                          onPressed: () {
+                            showbottomModelSheet();
+                          },
                           child: Icon(
                             Remix.edit_line,
                           ),
@@ -182,5 +202,96 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  void showbottomModelSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(
+              20,
+            ),
+            topRight: Radius.circular(
+              20,
+            ),
+          ),
+        ),
+        builder: (_) {
+          return ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(
+              top: mq.height * .02,
+              bottom: mq.height * .10,
+            ),
+            children: [
+              const Text(
+                'Pick Image Picture',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: mq.height * .02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        fixedSize: Size(
+                          mq.width * .3,
+                          mq.height * .13,
+                        ),
+                        shape: const CircleBorder()),
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image = await picker.pickImage(
+                        source: ImageSource.camera,
+                      );
+                      if (image != null) {
+                        setState(() {
+                          _image = image.path;
+                        });
+                      }
+
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      'assets/images/camera.png',
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        fixedSize: Size(
+                          mq.width * .3,
+                          mq.height * .13,
+                        ),
+                        shape: const CircleBorder()),
+                    onPressed: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final XFile? image = await picker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+                      if (image != null) {
+                        setState(() {
+                          _image = image.path;
+                        });
+                      }
+
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      'assets/images/add_image.png',
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
   }
 }

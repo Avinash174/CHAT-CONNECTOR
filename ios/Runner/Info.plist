@@ -55,9 +55,12 @@
 		<key>CFBundleURLSchemes</key>
 		<array>
 			<string>com.googleusercontent.apps.124582061115-4fgld3gqf3l3qk4evbg8fm50oek9g1vg</string>
-			
 		</array>
 	</dict>
 </array>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>App Required Access To The Photo Library For Picking Picture</string>
+<key>NSCameraUsingDescription</key>
+<string>App Required Access To The Camera For Taking Picture</string>
 </dict>
 </plist>
