@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
 import 'package:connector/models/chat_user.dart';
+import 'package:connector/models/message.dart';
+import 'package:connector/widgets/message_card.dart';
 import 'package:flutter/material.dart';
 import 'package:remixicon/remixicon.dart';
 
@@ -17,6 +19,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  List<Message> list = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,9 +48,26 @@ class _ChatScreenState extends State<ChatScreen> {
                         // list = data
                         //         ?.map((e) => chatUser.fromJson(e.data()))
                         //         .toList() ??
-                        //     [];
-
-                        final list = ['hi', 'hello'];
+                        //   [];
+                        list.clear();
+                        list.add(
+                          Message(
+                              msg: 'Hii',
+                              read: '',
+                              told: 'xyz',
+                              type: Type.text,
+                              fromId: APIs.user.uid,
+                              sent: '1:00 AM'),
+                        );
+                        list.add(
+                          Message(
+                              msg: 'Bye',
+                              read: '',
+                              told: APIs.user.uid,
+                              type: Type.text,
+                              fromId: APIs.user.uid,
+                              sent: '2:00 AM'),
+                        );
                         if (list.isNotEmpty) {
                           return ListView.builder(
                               padding: EdgeInsets.only(
@@ -56,7 +76,9 @@ class _ChatScreenState extends State<ChatScreen> {
                               physics: const BouncingScrollPhysics(),
                               itemCount: list.length,
                               itemBuilder: (context, index) {
-                                return Text('Message : ${list[index]}');
+                                return MessageCard(
+                                  message: list[index],
+                                );
                               });
                         } else {
                           return const Center(
