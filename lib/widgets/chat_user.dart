@@ -36,7 +36,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 height: mq.height * .055,
                 fit: BoxFit.fill,
                 imageUrl: widget.user.image.toString(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             title: Text(

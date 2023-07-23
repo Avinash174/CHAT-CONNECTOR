@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: CachedNetworkImage(
                                 width: mq.height * .2,
                                 height: mq.height * .2,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 imageUrl: widget.user.image.toString(),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
@@ -250,12 +250,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       final ImagePicker picker = ImagePicker();
                       final XFile? image = await picker.pickImage(
                         source: ImageSource.camera,
+                        imageQuality: 80,
                       );
                       if (image != null) {
                         setState(() {
                           _image = image.path;
                         });
                       }
+                      APIs.updateProfile(
+                        File(_image!),
+                      );
 
                       Navigator.pop(context);
                     },
@@ -273,14 +277,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         shape: const CircleBorder()),
                     onPressed: () async {
                       final ImagePicker picker = ImagePicker();
+
                       final XFile? image = await picker.pickImage(
                         source: ImageSource.gallery,
+                        imageQuality: 80,
                       );
+
                       if (image != null) {
                         setState(() {
                           _image = image.path;
                         });
                       }
+                      APIs.updateProfile(
+                        File(_image!),
+                      );
 
                       Navigator.pop(context);
                     },
