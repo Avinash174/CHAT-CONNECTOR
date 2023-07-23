@@ -82,4 +82,8 @@ class APIs {
       'about': me.about,
     });
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages() {
+    return firebaseFirestore.collection('message').snapshots();
+  }
 }
