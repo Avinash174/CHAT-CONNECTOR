@@ -2,7 +2,6 @@ import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
 import 'package:connector/models/chat_user.dart';
 import 'package:connector/screens/profile_screen.dart';
-import 'package:connector/widgets/chat_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:remixicon/remixicon.dart';
@@ -135,10 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount:
                             _isSearching ? searchList.length : list.length,
                         itemBuilder: (context, index) {
-                          return ChatUserCard(
-                              user: _isSearching
-                                  ? searchList[index]
-                                  : list[index]);
+                          // return ChatUserCard(
+                          //     user: _isSearching
+                          //         ? searchList[index]
+                          //         : list[index]);
                         });
                   } else {
                     return const Center(
