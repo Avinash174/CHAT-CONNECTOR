@@ -2,6 +2,7 @@ import 'package:connector/apis/apis.dart';
 import 'package:connector/main.dart';
 import 'package:connector/models/chat_user.dart';
 import 'package:connector/screens/profile_screen.dart';
+import 'package:connector/widgets/chat_user_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:remixicon/remixicon.dart';
@@ -111,47 +112,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           body: StreamBuilder(
-            stream: APIs.getAllUser(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                case ConnectionState.none:
-                  return const Center(child: CircularProgressIndicator());
-
-                case ConnectionState.active:
-                case ConnectionState.done:
-                  final data = snapshot.data?.docs;
-
-                  list =
-                      data?.map((e) => chatUser.fromJson(e.data())).toList() ??
-                          [];
-                  if (list.isNotEmpty) {
-                    return ListView.builder(
-                        padding: EdgeInsets.only(
-                          top: mq.height * 0.01,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount:
-                            _isSearching ? searchList.length : list.length,
-                        itemBuilder: (context, index) {
-                          // return ChatUserCard(
-                          //     user: _isSearching
-                          //         ? searchList[index]
-                          //         : list[index]);
-                        });
-                  } else {
-                    return const Center(
-                      child: Text(
-                        'No Connection Found',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    );
-                  }
-              }
+            stream: APIs.firebaseFirestore.collection('users').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              final _list = [];
+              return ListView.builder(
+                itemCount: 1,
+                padding: EdgeInsets.only(top: mq.height * .0),
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return const ChatUserCard();
+                },
+              );
             },
           ),
+
+          //
         ),
       ),
     );
