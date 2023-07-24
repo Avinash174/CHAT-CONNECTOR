@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               final _list = [];
               return ListView.builder(
-                itemCount: 1,
+                itemCount: 16,
                 padding: EdgeInsets.only(top: mq.height * .0),
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
